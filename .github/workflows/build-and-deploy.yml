@@ -24,3 +24,11 @@ jobs:
           java-version: '21'
       - name: Run
         run: "./gradlew run"
+
+  release:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.6
