@@ -12,6 +12,8 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+
+    id("org.danilopianini.publish-on-central") version "5.1.1"
 }
 
 repositories {
@@ -45,3 +47,30 @@ application {
     // Define the main class for the application.
     mainClass = "org.example.AppKt"
 }
+
+group = "io.github.sceredi" // This must be configured for the generated pom.xml to work correctly
+publishOnCentral {
+    projectUrl.set("https://github.com/sceredi/${project.name}")
+    scmConnection.set("git:git@github.com:sceredi/${project.name}")
+}
+publishing {
+    publications {
+        withType<MavenPublication> {
+            pom {
+                developers {
+                    developer {
+                        name.set("Simone Ceredi")
+                        email.set("ceredi.simone.iti@gmail.com")
+                        url.set("https://github.com/sceredi")
+                    }
+                }
+            }
+        }
+    }
+}
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useInMemoryPgpKeys(signingKey, signingPassword)
+}
+
