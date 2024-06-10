@@ -16,23 +16,28 @@ jobs:
         with:
           # Dry-deployment
           check-command: ./gradlew build --parallel
-          deploy-command: >-
-            ./gradlew
-            uploadKotlinOSSRHToMavenCentralNexus
-            close
-            drop
-            --parallel
           should-run-codecov: false
           should-deploy: false
-          maven-central-username: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-          maven-central-password: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-          signing-key: ${{ secrets.SIGNING_KEY }}
-          signing-password: ${{ secrets.SIGNING_PASSWORD }}
-
-  success:
-    runs-on: ubuntu-22.04
+  release:
+    runs-on: ubuntu-latest
     needs:
       - build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.6
+      - name: Setup node
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: lts/*
+      - run: npm clean-install
+      - run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  success:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+      - release
     if: >-
       always() && (
         contains(join(needs.*.result, ','), 'failure')
