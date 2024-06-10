@@ -59,3 +59,4 @@ outTmp/
 kotlin-ide/
 .kotlin/
 .teamcity/
+kls_database.db
