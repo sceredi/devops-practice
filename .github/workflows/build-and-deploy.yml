@@ -1,12 +1,6 @@
 name: CI/CD Process
 on:
-  push:
-    paths-ignore:
-      - '.gitignore'
-      - 'CHANGELOG.md'
-      - 'LICENSE'
-      - 'README.md'
-  pull_request:
+  workflow_call:
   workflow_dispatch:
 jobs:
   build:
