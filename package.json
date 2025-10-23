@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "22.20"
+    "node": "22.21"
   },
   "devDependencies": {
     "semantic-release": "^25.0.0"
