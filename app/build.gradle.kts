@@ -13,7 +13,7 @@ plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
 
-    id("org.danilopianini.publish-on-central") version "9.1.8"
+    id("org.danilopianini.publish-on-central") version "9.1.9"
 }
 
 repositories {
